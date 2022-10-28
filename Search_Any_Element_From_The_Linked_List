@@ -1,0 +1,142 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+
+typedef struct stack_linked
+{
+    int data;
+    struct stack_linked *next;
+} st;
+
+void traversal(st *top)
+{
+    while (top != NULL)
+    {
+        printf("Elemene : %d\n", top->data);
+        top = top->next;
+    }
+}
+
+int isempty(st *top)
+{
+    if (top == NULL)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int isfull(st *top)
+{
+    st *ptr = (st *)malloc(sizeof(st));
+    if (ptr == NULL)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+st *push(st *top, int data)
+{
+    if (isfull(top))
+    {
+        printf("Stack is overflow\n");
+        return 0;
+    }
+    else
+    {
+        st *ptr = (st *)malloc(sizeof(st));
+        ptr->data = data;
+        ptr->next = top;
+        top = ptr;
+        return top;
+    }
+}
+
+void middle(st *head){
+    st *fast = head;
+    st *slow = head;
+    while (fast->next != NULL)
+    {
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+    printf("The Middle value is : %d\n",slow->data);
+}
+
+
+bool search(st *head,int x){
+    st *current = head;
+    while (current->data != x && current != NULL)
+    {
+        current = current->next;
+    }
+    if (current == NULL)
+    {
+        return false;
+    }
+    return true;
+}
+
+void search_last(st *head, int K){
+    st *fast = head;
+    st *slow = head;
+
+    for (int i = 1; i < K; i++)
+    {
+        fast = fast->next;
+        if (fast == NULL)
+        {
+            return;
+        }
+        
+    }
+    while (fast->next != NULL)
+    {
+        fast = fast->next;
+        slow = slow->next;
+    }
+    
+    printf("The seaching value is : %d\n",slow->data);
+
+}
+
+void search_index(st *head,int x){
+    st *current = head;
+    for (int i = 0; i < x; i++)
+    {
+        current = current->next;
+    }
+    if (current != NULL)
+    {
+        printf("The index value is : %d\n",current->data);
+    }
+}
+
+
+int main(int argc, char const *argv[])
+{
+    st *top = NULL;
+    top = push(top, 5);
+    top = push(top, 6);
+    top = push(top, 3);
+    top = push(top, 6);
+    top = push(top, 10);
+    top = push(top, 3);
+    top = push(top, 48);
+    traversal(top);
+    middle(top);
+    printf("%d\n",search(top,48));
+    search_last(top,4);
+    search_index(top,4);
+    
+    traversal(top);
+    return 0;
+}
